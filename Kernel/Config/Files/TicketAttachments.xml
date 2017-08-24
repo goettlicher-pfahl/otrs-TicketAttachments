@@ -116,4 +116,87 @@
             </Option>
         </Setting>
     </ConfigItem>
+    <ConfigItem Name="Attachmentlist::CanSetCategory" Required="0" Valid="1">
+        <Description Translatable="1">Enable/Disable set category feature.</Description>
+        <Group>TicketAttachments</Group>
+        <SubGroup>Core</SubGroup>
+        <Setting>
+            <Option SelectedID="0">
+                <Item Key="0" Translatable="1">No</Item>
+                <Item Key="1" Translatable="1">Yes</Item>
+            </Option>
+        </Setting>
+    </ConfigItem>
+     <ConfigItem Name="Frontend::Module###AgentAttachmentSetCategory" Required="0" Valid="1">
+        <Description Translatable="1">Frontend module registration for attachment set category module.</Description>
+        <Group>TicketAttachments</Group>
+        <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
+        <Setting>
+            <FrontendModuleReg>
+                <Description Translatable="1">Set Category for Ticket Attachments.</Description>
+                <NavBarName>Ticket</NavBarName>
+                <Title Translatable="1">Set Category for Ticket Attachments</Title>
+            </FrontendModuleReg>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Attachmentlist::AttachmentCategories" Required="0" Valid="1">
+        <Description Translatable="1"></Description>
+        <Group>TicketAttachments</Group>
+        <SubGroup>Core</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="1">Erstunterlagen (Original)</Item>
+                <Item Key="2">Firmenbuchauszug</Item>
+                <Item Key="3">Erstunterlagen (Kopie)</Item>
+                <Item Key="4">Storno</Item>
+                <Item Key="5">Ausweiskopie</Item>
+                <Item Key="6">Heiratsurkunde</Item>
+                <Item Key="7">KEST-Freistellungserklärung</Item>
+                <Item Key="11">Verkauf</Item>
+                <Item Key="12">Nachzeichnung</Item>
+                <Item Key="13">Änderungen</Item>
+                <Item Key="14">Überträge</Item>
+                <Item Key="15">Vermittlerwechsel</Item>
+                <Item Key="16">Verpfändungen</Item>
+                <Item Key="17">Umschichtungen</Item>
+                <Item Key="18">sonstige Dokumente</Item>
+                <Item Key="19">Auflösung</Item>
+                <Item Key="20">Geburtsurkunde</Item>
+                <Item Key="23">Kontoauszüge</Item>
+                <Item Key="24">Verpfändung aufheben</Item>
+                <Item Key="26">Belege</Item>
+                <Item Key="27">Rücktritt</Item>
+                <Item Key="28">Depotauszug</Item>
+                <Item Key="29">Vollmacht</Item>
+                <Item Key="30">Überweisung</Item>
+                <Item Key="31">Verlass</Item>
+                <Item Key="32">Beschluß</Item>
+                <Item Key="33">Mahnung</Item>
+                <Item Key="34">Provisionen</Item>
+                <Item Key="35">Auszahlungsplan</Item>
+                <Item Key="36">CIS-Formular</Item>
+                <Item Key="37">retournierter Antrag</Item>
+                <Item Key="38">E-Mail</Item>
+                <Item Key="39">KYC-Formular</Item>
+                <Item Key="41">NZ-AZ</Item>
+                <Item Key="45">Kontrahentenabrechnung</Item>
+                <Item Key="46">Eröffnungsschreiben</Item>
+                <Item Key="48">Reklamationen</Item>
+                <Item Key="50">Erklärung für Aufträge mittels Telekommunikation</Item>
+                <Item Key="52">Anfrage Verlass</Item>
+                <Item Key="54">Aufforderungsschreiben</Item>
+                <Item Key="55">Depotinhaberänderung</Item>
+                <Item Key="60">Konto Plus</Item>
+                <Item Key="61">Vermögenserklärung</Item>
+                <Item Key="63">Einlieferungen</Item>
+                <Item Key="64">Einlagensicherung</Item>
+                <Item Key="65">Unterschriftsprobe</Item>
+                <Item Key="66">Steueransässigkeit Ausland</Item>
+                <Item Key="67">Honorarberatung</Item>
+                <Item Key="68">Steueransässigkeit</Item>
+                <Item Key="69">monatlicher Einzug KP</Item>
+                <Item Key="70">Einzug</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
 </otrs_config>
