@@ -43,7 +43,15 @@
             <Data Key="change_time">current_timestamp</Data>
             <Data Key="change_by">1</Data>
         </Insert>
+		<TableAlter Name="article_attachment">
+            <ColumnAdd Name="category" Required="false" Type="INTEGER" />
+		</TableAlter>
     </DatabaseInstall>
+	<DatabaseUninstall>
+		<TableAlter Name="article_attachment">
+            <ColumnDrop Name="category"/>
+		</TableAlter>
+    </DatabaseUninstall>
     <DatabaseUpgrade Type="post">
         <Insert Table="ticket_history_type" Version="1.0.1">
             <Data Key="name" Type="Quote">AttachmentRename</Data>
