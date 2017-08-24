@@ -39,6 +39,102 @@ sub AttachmentExists {
     return;
 }
 
+sub AttachmentSetCategory {
+    my ($Self, %Param) = @_;
+
+    my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
+    my $LogObject    = $Kernel::OM->Get('Kernel::System::Log');
+    my $DBObject     = $Kernel::OM->Get('Kernel::System::DB');
+    my $MainObject   = $Kernel::OM->Get('Kernel::System::Main');
+    
+    # check needed stuff
+    for my $Needed (qw(ArticleID UserID FileID TicketID Filename Category)) {
+        if ( !$Param{$Needed} ) {
+            $LogObject->Log(
+                Priority => 'error',
+                Message => "Need $Needed!",
+            );
+            return;
+        }
+    }
+
+    my $Debug = $ConfigObject->Get( 'Attachmentlist::Debug' );
+
+    $Param{Filename} = $MainObject->FilenameCleanUp(
+        Filename => $Param{Filename},
+        Type     => 'Local',
+    );
+
+    my $AttachmentExists = $Self->AttachmentExists( %Param );
+
+    if ( $Debug && $AttachmentExists ) {
+        $LogObject->Log(
+            Priority => 'debug',
+            Message  => "Attachment exists",
+        );
+    }
+
+    if ( $AttachmentExists && !$Param{Force} ) {
+        $LogObject->Log(
+            Priority => 'error',
+            Message => "Attachment already exists!",
+        );
+        return;
+    }
+
+    my ($AttachmentID, $Filename) = $Self->_AttachmentInfoGet( %Param );
+
+    if ( $Debug ) {
+        $LogObject->Log(
+            Priority => 'debug',
+            Message  => "Set Category for ID $AttachmentID // File $Filename",
+        );
+    }
+
+    return if !$AttachmentID;
+    return if !$Filename;
+
+    if ( $Debug ) {
+        $LogObject->Log(
+            Priority => 'debug',
+            Message  => "Path: $Path",
+        );
+    }
+
+    # add history entry
+    $Self->HistoryAdd(
+        TicketID     => $Param{TicketID},
+        ArticleID    => $Param{ArticleID},
+        HistoryType  => 'AttachmentSetCategory',
+        Name         => "\%\%$Filename\%\%$Param{Category}",
+        CreateUserID => $Param{UserID},
+    );
+
+    $Self->EventHandler(
+        Event => 'AttachmentSetCategory',
+        Data  => {
+            ArticleID => $Param{ArticleID},
+            FileID    => $AttachmentID,
+            Filename  => $Filename,
+            TicketID  => $Param{TicketID},
+            Category  => $Param{Category},
+        },
+        UserID => $Param{UserID},
+    );
+
+    # return if only rename in my backend
+    return 1 if $Param{OnlyMyBackend};
+
+    # set category for attachment in database
+    return if !$DBObject->Do(
+        SQL  => 'UPDATE article_attachment SET category = ? WHERE article_id = ? AND id = ?',
+        Bind => [ \$Param{Category}, \$Param{ArticleID}, \$AttachmentID ],
+    );
+
+    return 1;
+}
+
+
 sub AttachmentRename {
     my ($Self, %Param) = @_;
 
